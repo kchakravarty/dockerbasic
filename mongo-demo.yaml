@@ -7,12 +7,17 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=pass
+    volumes:
+      - mongo-data:/data/db
   mongo-exp:
     image: mongo-express:0.49
     ports:
       - 8080:8081
+    restart: always
     environment:
       - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
-      - ME_CONFIG_MONGODB_ADMINPASSWORD=password
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=pass
       - ME_CONFIG_MONGODB_SERVER=mongodb
-
+volumes: # define the list of volumes that need to be used
+  mongo-data:
+    driver: local # we are using a named volume. driver local specifies that this storage needs to be created on the host with the name mongo-data
